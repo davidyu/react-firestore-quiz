@@ -9,8 +9,16 @@
     font-style: italic;
 }
 
-.card-img-pulsate {
+.card-img-pulsate.carl {
     animation: pulse-blue 2s infinite;
+}
+
+.card-img-pulsate.sophia {
+    animation: pulse-red 2s infinite;
+}
+
+.card-img-pulsate.both {
+    animation: pulse-violet 2s infinite;
 }
 
 .selected-profile-name {
@@ -35,9 +43,21 @@
     font-style: italic;
 }
 
-.profile-img { 
+.profile-img.sophia { 
+    padding: 2px;
+    border: 2px solid rgba(243, 44, 82, 0.6);
+    background-color: black;
+}
+
+.profile-img.carl { 
     padding: 2px;
     border: 2px solid rgba(52, 172, 224, 0.6);
+    background-color: black;
+}
+
+.profile-img.both { 
+    padding: 2px;
+    border: 2px solid rgba(144, 96, 144, 0.6);
     background-color: black;
 }
 
@@ -55,6 +75,40 @@
     100% {
         transform: scale(0.90);
         box-shadow: 0 0 0 0 rgba(52, 172, 224, 0);
+    }
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(0.90);
+        box-shadow: 0 0 0 0 rgba(243, 44, 82, 0.7);
+    }
+    
+    70% {
+        transform: scale(1.0);
+        box-shadow: 0 0 0 20px rgba(243, 44, 82, 0);
+    }
+    
+    100% {
+        transform: scale(0.90);
+        box-shadow: 0 0 0 0 rgba(243, 44, 82, 0);
+    }
+}
+
+@keyframes pulse-violet {
+    0% {
+        transform: scale(0.90);
+        box-shadow: 0 0 0 0 rgba(144, 96, 144, 0.7);
+    }
+    
+    70% {
+        transform: scale(1.0);
+        box-shadow: 0 0 0 20px rgba(144, 96, 144, 0);
+    }
+    
+    100% {
+        transform: scale(0.90);
+        box-shadow: 0 0 0 0 rgba(144, 96, 144, 0);
     }
 }
 

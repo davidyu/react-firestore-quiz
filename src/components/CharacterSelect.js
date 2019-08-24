@@ -49,7 +49,8 @@ class CharacterSelect extends React.Component {
 
     mapProfileToCard(state, profile) {
         const profileName = `${profile.firstName}-${profile.lastName}`;
-        const profileSelected = this.isCharacterSelected(profile) ? 'profile-img card-img-pulsate' : 'profile-img';
+        const association = profile.association;
+        const profileSelected = (this.isCharacterSelected(profile) ? 'profile-img card-img-pulsate ' : 'profile-img') + ' ' + association;
         const nameOrReadyText = this.isCharacterSelected(profile) ? 
             <h2 className='selected-profile-name'>Waiting for other players...</h2> : <span>{profile.firstName} {profile.lastName}</span>;
 
