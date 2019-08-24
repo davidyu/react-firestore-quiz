@@ -244,8 +244,27 @@ class Admin extends React.Component {
         this.state.unsubscribeCallbacks.forEach(cb => cb());
     }
 
+    saveHistoryRecord() {
+        console.log("saving history");
+        const timestamp = new Date().getTime();
+        const collectionKey = "playthrough " + timestamp;
+        db.collection("state").get().then(stateSnapshot => {
+            stateSnapshot.forEach(doc => {
+                const data = doc.data();
+                if (doc.id.startsWith("q")) {
+                    db.collection(collectionKey).doc(doc.id).set(data);
+                }
+            });
+        });
+    }
+
     stageTransition(newStage) {
-        return () => this.state.stageRef.update({id: newStage});
+        return () => {
+          if (newStage == constants.LEADERBOARD) {
+              this.saveHistoryRecord();
+          }
+          this.state.stageRef.update({id: newStage});
+        }
     }
 
     isSelected(stageId) {
@@ -288,7 +307,7 @@ class Admin extends React.Component {
                 <button className={`button -${this.isSelected(constants.CHARACTER_SELECT)}`} onClick={this.stageTransition(constants.CHARACTER_SELECT)}>Character Select</button>
                 <button className={`button -${this.isSelected(constants.QUIZ)}`} onClick={this.stageTransition(constants.QUIZ)}>Quiz</button>
                 <button className={`button -${this.isSelected(constants.LEADERBOARD)}`} onClick={this.stageTransition(constants.LEADERBOARD)}>Leaderboard</button>                
-                <table>{questions}</table>
+                <table><tbody>{questions}</tbody></table>
                 <button className={`button -regular`} onClick={this.backtrackQuestionStage()}>Previous</button>
                 <button className={`button -regular`} onClick={this.advanceQuestionStage()}>Next</button>
                 <button className={`button -regular`} onClick={this.resetGameState()}>Reset</button>
