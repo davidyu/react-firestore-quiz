@@ -7,6 +7,8 @@ class Leaderboard extends React.Component {
     
     state = {
         leaderboard: [],
+        teamCarlScore: 0,
+        teamSophiaScore: 0,
     }
 
     componentWillMount() {
@@ -61,21 +63,44 @@ class Leaderboard extends React.Component {
                         profile: profile
                     };
                 });
+
+                const teamCarlScore = highScores.reduce((total, player) =>
+                {
+                    return total + player.profile.association == 'carl' ? player.score : 0;
+                });
+
+                const teamSophiaScore = highScores.reduce((total, player) =>
+                {
+                    return total + player.profile.association == 'sophia' ? player.score : 0;
+                });
                 
-                self.setState({leaderboard: highScores.concat(playersWithoutScores)});
+                self.setState({leaderboard: highScores.concat(playersWithoutScores),
+                               teamCarlScore: teamCarlScore,
+                               teamSophiaScore: teamSophiaScore});
             });
     }
     
     render() {
-
-        const leaderboard = this.state.leaderboard.map((entry, idx) => {
+        // only show first 10
+        const leaderboard = this.state.leaderboard.slice(0, 10).map((entry, idx) => {
+            let medal = "";
+            if (idx == 0) {
+                medal = "🥇";
+            } else if (idx == 1) {
+                medal = "🥈";
+            } else if (idx == 2) {
+                medal = "🥉";
+            }
             return (
                 <tr key={entry.profile.id}>
                     <td>
                         <img src={entry.profile.img}/>
                     </td>
                     <td align='left'>
-                        <h3 className='leaderboard-name'>{`#${idx + 1} ${entry.profile.firstName} ${entry.profile.lastName}`}</h3>
+                        <p className='leaderboard-name'>{`#${idx + 1} ${entry.profile.firstName} ${entry.profile.lastName} ${medal}`}</p>
+                    </td>
+                    <td>
+                        <p>{entry.score}</p>
                     </td>
                 </tr>
             );
@@ -83,8 +108,9 @@ class Leaderboard extends React.Component {
 
         return (
             <div id='leaderboard'>
-                <h2 className='grid-item title-text'>Thank You For Participating!</h2>
-                <table>
+                <h2 className='leaderboard-title'>Thank You For Participating!</h2>
+                <p><span id="team-carl">Team Carl:</span> {this.state.teamCarlScore} &nbsp;&nbsp;<span id="team-sophia">Team Sophia:</span> {this.state.teamSophiaScore}</p>
+                <table id="heroic-leaderboard">
                     <tbody>
                         {leaderboard}
                     </tbody>

@@ -1,8 +1,56 @@
 #leaderboard .leaderboard-name {
-    font-family: 'Question Serif';
+    font-family: 'Koverwatch';
     padding-left: 10px;
+    padding-right: 30px;
 }
 
 #leaderboard tr:nth-child(-n+1) .leaderboard-name {
     color: var(--color-grass);
+}
+
+#leaderboard .leaderboard-title {
+    font-family: 'Basic Serif';
+}
+
+@font-face {
+  font-family: 'Basic Serif';
+  font-style: normal;
+  src: url('../fonts/Chunkfive.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Koverwatch';
+    font-style: normal;
+    src: url('../fonts/koverwatch.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Sophia Sans';
+  font-style: normal;
+  src: url('../fonts/sacramento.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Carl Sans';
+  font-style: normal;
+  src: url('../fonts/Please write me a song.ttf') format('truetype');
+}
+
+#team-sophia {
+  font-family: 'Sophia Sans';
+  color: var(--color-salmon);
+  display: inline-block;
+  font-size: calc(16px + 2vmin);
+}
+
+#team-carl {
+  font-family: 'Carl Sans';
+  color: var(--color-ocean);
+  display: inline-block;
+  font-size: calc(16px + 2vmin);
+}
+
+#heroic-leaderboard {
+  margin-left: auto;
+  margin-right: auto;
 }
