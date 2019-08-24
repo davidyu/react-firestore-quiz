@@ -66,13 +66,13 @@ class Leaderboard extends React.Component {
 
                 const teamCarlScore = highScores.reduce((total, player) =>
                 {
-                    return total + player.profile.association == 'carl' ? player.score : 0;
-                });
+                    return total + (player.profile.association == 'carl' ? player.score : 0);
+                }, 0);
 
                 const teamSophiaScore = highScores.reduce((total, player) =>
                 {
-                    return total + player.profile.association == 'sophia' ? player.score : 0;
-                });
+                    return total + (player.profile.association == 'sophia' ? player.score : 0);
+                }, 0);
                 
                 self.setState({leaderboard: highScores.concat(playersWithoutScores),
                                teamCarlScore: teamCarlScore,
@@ -94,7 +94,7 @@ class Leaderboard extends React.Component {
             return (
                 <tr key={entry.profile.id}>
                     <td>
-                        <img src={entry.profile.img}/>
+                        <img className={"profile-img " + entry.profile.association} src={entry.profile.img}/>
                     </td>
                     <td align='left'>
                         <p className='leaderboard-name'>{`#${idx + 1} ${entry.profile.firstName} ${entry.profile.lastName} ${medal}`}</p>
@@ -109,7 +109,7 @@ class Leaderboard extends React.Component {
         return (
             <div id='leaderboard'>
                 <h2 className='leaderboard-title'>Thank You For Participating!</h2>
-                <p><span id="team-carl">Team Carl:</span> {this.state.teamCarlScore} &nbsp;&nbsp;<span id="team-sophia">Team Sophia:</span> {this.state.teamSophiaScore}</p>
+                <p id="team-scores"><span id="team-carl">Team Carl:</span> {this.state.teamCarlScore} &nbsp;&nbsp;<span id="team-sophia">Team Sophia:</span> {this.state.teamSophiaScore}</p>
                 <table id="heroic-leaderboard">
                     <tbody>
                         {leaderboard}
