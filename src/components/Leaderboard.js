@@ -25,8 +25,10 @@ class Leaderboard extends React.Component {
                 return db.collection("state").get().then(stateSnapshot => {
                     let answers = {};
                     stateSnapshot.forEach(doc => {
-                        const response = doc.data();
-                        answers[response.id] = response;
+                        if (doc.id.startsWith('q')) {
+                            const response = doc.data();
+                            answers[response.id] = response;
+                        }
                     });
 
                     return questions.map(question => {
@@ -38,7 +40,9 @@ class Leaderboard extends React.Component {
             .then(results => {
                 let leaderboard = {};
                 results.map(result => {
-                    const correctResponses = result.results[`response${result.correct + 1}`];
+                    const correctResponses = result.correct === -1
+                                           ? result.results.response1.concat(result.results.response2, result.results.response3, result.results.response4)
+                                           : result.results[`response${result.correct + 1}`];
                     if (correctResponses) {
                         correctResponses.forEach(respondee => {
                             leaderboard[respondee] = (leaderboard[respondee] || 0) + 1;

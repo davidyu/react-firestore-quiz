@@ -296,7 +296,7 @@ class Admin extends React.Component {
                 <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(0)}>Everyone Selects Response 1</button>
                 <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(1)}>Everyone Selects Response 2</button>
                 <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(2)}>Everyone Selects Response 3</button>
-                <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(3)}>Everyone Selects Response 3</button>
+                <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(3)}>Everyone Selects Response 4</button>
                 <button className={`button -regular`} onClick={this.debugClearAllPlayerResponses()}>Clear All Responses</button>
             </div>
         );
