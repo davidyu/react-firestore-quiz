@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/Leaderboard.css';
 import {db, FieldValue} from '../firebase.js';
-import {Profiles} from '../constants/Profiles.js';
+import {Profiles, SELECTED_PROFILE_LS_KEY} from '../constants/Profiles.js';
 
 class Leaderboard extends React.Component {
     
     state = {
         leaderboard: [],
+        me: null,
         teamCarlScore: 0,
         teamSophiaScore: 0,
     }
@@ -83,6 +84,11 @@ class Leaderboard extends React.Component {
                                teamSophiaScore: teamSophiaScore});
             });
     }
+
+    componentDidMount() {
+        const profile = JSON.parse(localStorage.getItem(SELECTED_PROFILE_LS_KEY));
+        this.setState({ me: profile });
+    }
     
     render() {
         // only show first 10
@@ -110,9 +116,16 @@ class Leaderboard extends React.Component {
             );
         });
 
+        const selfEntry = this.state.leaderboard.find(entry => {
+            return (this.state.me ? entry.profile.id == this.state.me.id : false);
+        });
+
+        const selfScore = selfEntry ? <p>Your score: {selfEntry.score}</p> : null;
+
         return (
             <div id='leaderboard'>
                 <h2 className='leaderboard-title'>Thank You For Participating!</h2>
+                {selfScore}
                 <p id="team-scores"><span id="team-carl">Team Carl:</span> {this.state.teamCarlScore} &nbsp;&nbsp;<span id="team-sophia">Team Sophia:</span> {this.state.teamSophiaScore}</p>
                 <table id="heroic-leaderboard">
                     <tbody>
