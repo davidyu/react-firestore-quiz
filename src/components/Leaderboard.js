@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/Leaderboard.css';
 import {db, FieldValue} from '../firebase.js';
-import {Profiles, SELECTED_PROFILE_LS_KEY} from '../constants/Profiles.js';
+import {IsAnonymous, IsAnonymousId, Profiles, SELECTED_PROFILE_LS_KEY} from '../constants/Profiles.js';
 
 class Leaderboard extends React.Component {
     
@@ -57,7 +57,7 @@ class Leaderboard extends React.Component {
                 const highScores = keys.map(key => {
                     return { 
                         score: leaderboard[key],
-                        profile: Profiles.find(profile => profile.id === key)
+                        profile: Profiles.find(profile => profile.id === key || (IsAnonymousId(key) && IsAnonymous(profile)) )
                     };
                 });
 
