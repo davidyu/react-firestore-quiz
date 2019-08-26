@@ -196,6 +196,34 @@ class Admin extends React.Component {
         }
     }
 
+    exportLastPlayHistoryAsJson() {
+        return () => {
+            let history = [];
+            db.collection("state").get().then(stateSnapshot => {
+                stateSnapshot.forEach(doc => {
+                    if (doc.id.startsWith('q')) {
+                        history.push(doc.data());
+                    }
+                });
+
+                let questions = this.state.questions;
+                let profiles = Profiles;
+                let exportObj = {
+                    history: history,
+                    questions: questions,
+                    profiles: profiles,
+                };
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj));
+                let downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", "replay.json");
+                document.body.appendChild(downloadAnchorNode); // required for firefox
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+            });
+        }
+    }
+
     componentDidMount() {
         let self = this;
 
@@ -311,6 +339,7 @@ class Admin extends React.Component {
                 <button className={`button -regular`} onClick={this.backtrackQuestionStage()}>Previous</button>
                 <button className={`button -regular`} onClick={this.advanceQuestionStage()}>Next</button>
                 <button className={`button -regular`} onClick={this.resetGameState()}>Reset</button>
+                <button className={`button -regular`} onClick={this.exportLastPlayHistoryAsJson()}>Export Last Session</button>
                 <h2>Danger Zone</h2>
                 <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(0)}>Everyone Selects Response 1</button>
                 <button className={`button -regular`} onClick={this.debugSetAllPlayerResponseTo(1)}>Everyone Selects Response 2</button>
